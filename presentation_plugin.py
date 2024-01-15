@@ -2,7 +2,7 @@ bl_info = {
     "name": "3D Presentation Plug-in",
     "author": "Matyas Sojka",
     "version": (1, 0),
-    "blender": (2, 91, 2),
+    "blender": (4, 0, 1),
     "location": "View3D > Sidebar > Components + Presentation + Slideshow",
     "description": "Create animated 3D presentations and present them in Blender.",
     "warning": "",
@@ -850,7 +850,7 @@ def normalizeImageDimensions(img_obj, max_y, i):
             max_y = orig_dim[1]*coef
         if orig_dim[1]*coef > max_y:
             max_y = orig_dim[1]*coef      
-    return max_y 
+    return int(max_y)
 
 
 # -----------------------------------------------------------------------------------------------------
@@ -1439,9 +1439,9 @@ class AddImage(bpy.types.Operator):
         bpy.context.scene.frame_current = 1
         
         if pres_tool.interpolate_camera is False:
-            bpy.context.scene.frame_end = n*bpy.context.scene.render.fps*pres_tool.transition_time
+            bpy.context.scene.frame_end = int(n*bpy.context.scene.render.fps*pres_tool.transition_time)
         else:
-            bpy.context.scene.frame_end = (n-1)*bpy.context.scene.render.fps*pres_tool.transition_time
+            bpy.context.scene.frame_end = int((n-1)*bpy.context.scene.render.fps*pres_tool.transition_time)
         
         #set keyframes and markers
         bpy.context.scene.timeline_markers.new("SLIDE_" + str(0), frame=1)
